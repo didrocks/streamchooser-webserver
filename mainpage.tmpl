@@ -1,17 +1,37 @@
 <html>
 <head>
-<title>Choose your stream!</title>
+  <title>Choose your stream!</title>
+  <link rel="stylesheet" type="text/css" media="all" href="http://assets.ubuntu.com/sites/guidelines/css/latest/ubuntu-styles.css"/>
 </head>
 <body>
 
-{{ if .Playing }}
-<div>Current playing stream: {{.Current}}</div>
-<div>Check the awesome ascii version on your command line via <span>telnet {{.Host}} 8043</span>!</div>
-{{ end }}
+<header class="banner global" role="banner">
+  <nav role="navigation" class="nav-primary nav-right">
+    <div class="logo">
+      <a class="logo-ubuntu" href="/">
+        <img width="106" height="25" src="http://assets.ubuntu.com/sites/ubuntu/1044/u/img/logos/logo-ubuntu-orange.svg" alt="Ubuntu" />
+      </a>
+    </div>
+  </nav>
+</header>
 
-<form action="/" method="post">
-    New source stream url: <input type="text" name="url">
-    <input type="submit">
-</form>
+<div class="wrapper">
+  <div id="main-content" class="inner-wrapper">
+    {{ if .Playing }}
+    <div class="row row-hero">
+      <h1>Current playing: <a href="{{.Current}}">{{.Current}}</a></h1>
+      <p>Check the awesome ascii version on your command line via <pre>telnet {{.Host}} 8043</pre></p>
+    </div>
+    {{ end }}
+
+    <div class="row">
+      <form action="/" method="post">
+        Load a new video streaming source: <input type="text" size="80" name="url">
+        <input type="submit" value="Change stream">
+      </form>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
