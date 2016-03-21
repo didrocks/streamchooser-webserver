@@ -1,0 +1,15 @@
+<html>
+<head>
+<title>Choose your stream!</title>
+</head>
+<body>
+
+<div>Current playing stream: {{.Current}}</div>
+<div>Get it on your command line via <span>telnet {{.Host}} 8043</span>!</div>
+
+<form action="/" method="post">
+    New source stream url: <input type="text" name="streamurl">
+    <input type="submit">
+</form>
+</body>
+</html>
