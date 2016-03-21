@@ -4,11 +4,13 @@
 </head>
 <body>
 
+{{ if .Playing }}
 <div>Current playing stream: {{.Current}}</div>
-<div>Get it on your command line via <span>telnet {{.Host}} 8043</span>!</div>
+<div>Check the awesome ascii version on your command line via <span>telnet {{.Host}} 8043</span>!</div>
+{{ end }}
 
 <form action="/" method="post">
-    New source stream url: <input type="text" name="streamurl">
+    New source stream url: <input type="text" name="url">
     <input type="submit">
 </form>
 </body>
