@@ -58,19 +58,20 @@ func handler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	// Check for assets dir
 	serviceDir := os.Getenv("SNAP")
-	if _, err := os.Stat(path.Join(serviceDir, "mainpage.tmpl")); os.IsNotExist(err) {
+	var err error
+	if _, err = os.Stat(path.Join(serviceDir, "mainpage.tmpl")); os.IsNotExist(err) {
 		// Assuming it's running from cwd if go run is used
 		serviceDir, err = filepath.Abs(filepath.Dir(os.Args[0]))
-		if _, err := os.Stat(path.Join(serviceDir, "mainpage.tmpl")); os.IsNotExist(err) {
+		if _, err = os.Stat(path.Join(serviceDir, "mainpage.tmpl")); os.IsNotExist(err) {
 			serviceDir = "."
 		}
-		templateFile, err = template.ParseFiles(path.Join(serviceDir, "mainpage.tmpl"))
-		if err != nil {
-			log.Fatal(err)
-		}
+	}
+	templateFile, err = template.ParseFiles(path.Join(serviceDir, "mainpage.tmpl"))
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	// Workaroudn for other files until we have cwd = SNAP_DATA for service (next ubuntu core image)
+	// Workaround for other files until we have cwd = SNAP_DATA for service (next ubuntu core image)
 	os.Chdir(os.Getenv("SNAP_DATA"))
 
 	// Load current stream if any
