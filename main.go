@@ -70,6 +70,9 @@ func main() {
 		}
 	}
 
+	// Workaroudn for other files until we have cwd = SNAP_DATA for service (next ubuntu core image)
+	os.Chdir(os.Getenv("SNAP_DATA"))
+
 	// Load current stream if any
 	content, err := ioutil.ReadFile(streamFileName)
 	if err == nil {
