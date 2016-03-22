@@ -11,7 +11,7 @@ import (
 )
 
 var serviceDir string
-var pagePath string
+var templateFile *template.Template
 var currentStream string
 
 const port = ":8041"
@@ -25,9 +25,8 @@ type streamInfo struct {
 func handler(w http.ResponseWriter, r *http.Request) {
 	currentStream = r.FormValue("url")
 
-	t, _ := template.ParseFiles(pagePath)
 	formInfo := streamInfo{Current: currentStream, Host: strings.TrimSuffix(r.Host, port), Playing: currentStream != ""}
-	t.Execute(w, formInfo)
+	templateFile.Execute(w, formInfo)
 }
 
 func main() {
@@ -35,11 +34,15 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	pagePath = path.Join(serviceDir, "mainpage.tmpl")
-	// assuming it's running from cwd if go run is used
-	if _, err := os.Stat(pagePath); os.IsNotExist(err) {
+	// Assuming it's running from cwd if go run is used
+	if _, err := os.Stat(path.Join(serviceDir, "mainpage.tmpl")); os.IsNotExist(err) {
 		serviceDir = "."
-		pagePath = path.Join(serviceDir, "mainpage.tmpl")
+	}
+	templateFile, err = template.ParseFiles(path.Join(serviceDir, "mainpage.tmpl"))
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	}
 
 	http.HandleFunc("/", handler)
