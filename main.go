@@ -2,6 +2,7 @@ package main
 
 import (
 	"html/template"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -43,6 +44,10 @@ func main() {
 		log.Fatal(err)
 	}
 
+	// Load current stream if any
+	content, err := ioutil.ReadFile(streamFileName)
+	if err == nil {
+		currentStream = strings.TrimPrefix(string(content), "STREAM_URL=")
 	}
 
 	http.HandleFunc("/", handler)
