@@ -16,7 +16,7 @@ var serviceDir string
 var templateFile *template.Template
 var currentStream string
 
-const port = ":8041"
+const port = ":8042"
 
 // those 2 files are in pwd
 const streamFileName = "input_video"
