@@ -31,6 +31,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	// Check for assets dir
 	serviceDir, err := filepath.Abs(filepath.Dir(os.Args[0]))
 	if err != nil {
 		log.Fatal(err)
@@ -50,7 +51,7 @@ func main() {
 		currentStream = strings.TrimPrefix(string(content), "STREAM_URL=")
 	}
 
+	// Starts server
 	http.HandleFunc("/", handler)
-	http.Handle("/static/", http.FileServer(http.Dir(path.Join(serviceDir, "static"))))
 	http.ListenAndServe(port, nil)
 }
